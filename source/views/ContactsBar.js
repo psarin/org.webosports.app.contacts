@@ -35,27 +35,14 @@ enyo.kind({
             fit: true,
             components: [
                 {
-                    name: "main",
-                    description: "All",
-                    kind: "FittableRows",
-                    classes: "contacts-list",
-                    components: [
-                        {
-                            kind: "onyx.InputDecorator",
-                            classes: "contacts-search",
-                            components: [
-                                // When our version of webkit supports type "search", we can get a "recent searches" dropdown for free
-                                { name: "searchInput", kind: "onyx.Input", placeholder: "Search" /*, type: "search", attributes: {results:6, autosave:"contactsSearch"}, style: "font-size: 16px;"*/ },
-                                { kind: "Image", src: "assets/search-input.png" }
-                            ]
-                        },
-                        { name: "allContactsList", kind: "ContactsList", fit: true, collection: new AllPersonCollection(), ontap: "selectPerson" }
-                    ]
+                    name: "allContactsList",
+                    //description: "All",
+                    kind: "ContactsSearchList"
                 },
                 //Scroller is going crazy without the FittableRows
                 {
                     name: "favourites",
-                    description: "Favourites",
+                    //description: "Favourites",
                     kind: "FittableRows",
                     classes: "contacts-list",
                     components: [
@@ -64,10 +51,6 @@ enyo.kind({
                 }
             ]
         }
-    ],
-
-    bindings: [
-        {from: ".$.searchInput.value", to: ".$.allContactsList.collection.searchText"}
     ],
 
     paneChange: function (inSender, inEvent) {
@@ -89,14 +72,6 @@ enyo.kind({
     	this.$.favContactsList.collection.refilter();
     },
 
-    selectPerson: function (inSender, inEvent) {
-        if (!inSender.selected()) {
-            inSender.select(inEvent.index);
-        }
-
-        this.doSelected({person: inSender.selected()});
-    },
-    
     goBack: function (inSender, inEvent) {
     	if (this.$.panes.get('index') === 0) {
     		this.$.searchInput.set('value', '');

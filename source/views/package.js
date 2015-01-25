@@ -6,6 +6,7 @@ enyo.depends(
     //contact lists:
     "ContactItem.js",
     "ContactsList.js",
+    "ContactsSearchList.js",
 
     //UI controls:
     "ContactHeader.js",
